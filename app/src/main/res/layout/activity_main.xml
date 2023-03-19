@@ -27,6 +27,7 @@
             android:gravity="center|right"
             android:hint="I"
             android:textColor="#000"
+            android:background="@drawable/vien"
             android:textSize="80sp"/>
     </LinearLayout>
     <TableLayout
