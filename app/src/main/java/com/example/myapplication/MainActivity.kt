@@ -30,7 +30,9 @@ class MainActivity : AppCompatActivity() {
                     c = 0
                 }
                 val oldValue = textView1.text.toString()
-                if (method.isEmpty() && ip1 != 0) {
+                if (ip1 == 0) {
+                    textView1.text = oldValue
+                } else if (method.isEmpty() && ip1 != 0) {
                     textView1.text = oldValue + "0"
                     ip1 = ip1 * 10 + 0
                 } else {
@@ -229,12 +231,17 @@ class MainActivity : AppCompatActivity() {
             }
             val butResult = findViewById<Button>(R.id.bang)
             butResult.setOnClickListener() {
-                if (method == "÷" && (ip1 % ip2 != 0)) {
-                    textView1.text = getResultD().toString()
-                } else {
+                if (method.isEmpty()){
                     textView1.text = getResultInt().toString()
+                    reStartExcept1()
+                } else {
+                    if (method == "÷" && (ip1 % ip2 != 0)) {
+                        textView1.text = getResultD().toString()
+                    } else {
+                        textView1.text = getResultInt().toString()
+                    }
+                    reStart()
                 }
-                reStart()
                 c = 1
             }
         }
@@ -247,14 +254,22 @@ class MainActivity : AppCompatActivity() {
             method = ""
         }
 
+        fun reStartExcept1() {
+            ip2 = 0
+            ob2 = 0
+            method = ""
+        }
         fun getResultInt(): Int {
             var result = 0
-            when (method) {
+            if (method.isEmpty() && ip1 != 0){
+                result = ip1 * ob1
+            } else when (method) {
                 "+" -> result = (ip1 * ob1) + (ip2 * ob2)
                 "−" -> result = (ip1 * ob1) - (ip2 * ob2)
                 "×" -> result = (ip1 * ob1) * (ip2 * ob2)
                 "÷" -> result = (ip1 * ob1) / (ip2 * ob2)
             }
+            ip1 = result
             return result
         }
 
