@@ -10,6 +10,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textView1: TextView
     var ip1 = 0
     var ip2 = 0
+    var ip3 = 0.0
+    var ob1 = 1
+    var ob2 = 1
     var method = ""
     var c = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +30,9 @@ class MainActivity : AppCompatActivity() {
                     c = 0
                 }
                 val oldValue = textView1.text.toString()
-                if (method.isEmpty() && ip1 == 0) {
-                    ip1 = 0
+                if (method.isEmpty() && ip1 != 0) {
+                    textView1.text = oldValue + "0"
+                    ip1 = ip1 * 10 + 0
                 } else {
                     textView1.text = oldValue + "0"
                     ip2 = ip2 * 10 + 0
@@ -146,6 +150,7 @@ class MainActivity : AppCompatActivity() {
                     textView1.text = ""
                     c = 0
                 }
+                tv2.text = "C"
                 val oldValue = textView1.text.toString()
                 textView1.text = oldValue + "9"
                 if (method.isEmpty()) ip1 = ip1 * 10 + 9
@@ -158,7 +163,7 @@ class MainActivity : AppCompatActivity() {
                 else if (method.isEmpty()) {
                     textView1.text = oldValue + "+"
                     method = "+"
-                } else if (method == "*" || method == "/") {
+                } else if (method != "+") {
                     textView1.text = ip1.toString() + "+"
                     method = "+"
                 } else textView1.text = oldValue + "+"
@@ -167,14 +172,21 @@ class MainActivity : AppCompatActivity() {
             var dem = 0
             tru.setOnClickListener() {
                 val oldValue = textView1.text.toString()
-                if (ip1 == 0) textView1.text = oldValue + "−"
-                else if (method.isEmpty()) {
+                if (ip1 == 0 && ob1 == 1) {
+                    textView1.text = oldValue + "−"
+                    ob1 = -1
+                } else if (method.isEmpty() && ip1 != 0) {
                     textView1.text = oldValue + "−"
                     method = "−"
-                } else if (method == "*" || method == "/") {
+                } else if (method != "−"){
                     textView1.text = ip1.toString() + "−"
                     method = "−"
-                } else textView1.text = oldValue + "−"
+                } else if(ip2 == 0 && ob2 == 1){
+                    textView1.text = oldValue + "−"
+                    ob2 = -1
+                } else if(c==1){
+
+                }
             }
             val nhan = findViewById<Button>(R.id.nhan)
             nhan.setOnClickListener() {
@@ -182,10 +194,10 @@ class MainActivity : AppCompatActivity() {
                 if (ip1 == 0) textView1.text = oldValue + ""
                 else if (ip1 != 0 && method.isEmpty()) {
                     textView1.text = oldValue + "×"
-                    method = "*"
-                } else if (method != "*") {
+                    method = "×"
+                } else if (method != "×") {
                     textView1.text = ip1.toString() + "×"
-                    method = "*"
+                    method = "×"
                 }
             }
             val chia = findViewById<Button>(R.id.chia)
@@ -194,26 +206,34 @@ class MainActivity : AppCompatActivity() {
                 if (ip1 == 0) textView1.text = oldValue + ""
                 else if (ip1 != 0 && method.isEmpty()) {
                     textView1.text = oldValue + "÷"
-                    method = "/"
-                } else if (method != "/") {
+                    method = "÷"
+                } else if (method != "÷") {
                     textView1.text = ip1.toString() + "÷"
-                    method = "/"
+                    method = "÷"
                 }
-
             }
             val butAC = findViewById<Button>(R.id.AC)
             butAC.setOnClickListener() {
-                reStart()
-                textView1.text = ""
-                tv2.text = "AC"
+                if (ip2 != 0) {
+                    ip2 = 0
+                    ob2 = 1
+                    textView1.text = printInC(ob1, ip1) + method
+                } else if (method.isNotEmpty()) {
+                    method = ""
+                    textView1.text = printInC(ob1, ip1)
+                } else {
+                    reStart()
+                    textView1.text = ""
+                    tv2.text = "AC"
+                }
             }
             val butResult = findViewById<Button>(R.id.bang)
             butResult.setOnClickListener() {
-                if (method == "/") {
-                    if (ip1 % ip2 == 0)
-                        textView1.text = getResultDC().toString()
-                    else textView1.text = getResultD().toString()
-                } else textView1.text = getResultInt().toString()
+                if (method == "÷" && (ip1 % ip2 != 0)) {
+                    textView1.text = getResultD().toString()
+                } else {
+                    textView1.text = getResultInt().toString()
+                }
                 reStart()
                 c = 1
             }
@@ -222,28 +242,42 @@ class MainActivity : AppCompatActivity() {
         fun reStart() {
             ip1 = 0
             ip2 = 0
+            ob1 = 1
+            ob2 = 1
             method = ""
         }
 
         fun getResultInt(): Int {
             var result = 0
             when (method) {
-                "+" -> result = ip1 + ip2
-                "−" -> result = ip1 - ip2
-                "*" -> result = ip1 * ip2
+                "+" -> result = (ip1 * ob1) + (ip2 * ob2)
+                "−" -> result = (ip1 * ob1) - (ip2 * ob2)
+                "×" -> result = (ip1 * ob1) * (ip2 * ob2)
+                "÷" -> result = (ip1 * ob1) / (ip2 * ob2)
             }
             return result
         }
 
-        fun getResultDC(): Int {
-            var result1 = 0
-            result1 = ip1 / ip2
-            return result1
-        }
-
         fun getResultD(): Double {
             var result2 = 0.0
-            result2 = ip1.toDouble() / ip2.toDouble()
+            result2 = (ip1 * ob1).toDouble() / (ip2 * ob2).toDouble()
             return result2
         }
+
+        fun printInC(ob:Int,num:Int):String{
+            var tv3 = ""
+            if(ob == -1) {
+                tv3 = "−" + num.toString()
+            } else {
+                tv3 = num.toString()
+            }
+            tv2.text = "AC"
+            return tv3
+        }
+    /*fun continue(){
+        if(c==1){
+
+        }
+    }*/
     }
+

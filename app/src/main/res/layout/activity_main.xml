@@ -26,6 +26,7 @@
             android:layout_height="120dp"
             android:gravity="center|right"
             android:hint="I"
+            android:autoSizeTextType="uniform"
             android:textColor="#000"
             android:background="@drawable/vien"
             android:textSize="80sp"/>
@@ -38,14 +39,17 @@
             android:paddingTop="75dp"
             android:weightSum="4"
             android:textAlignment="center">
+
             <Button
                 android:id="@+id/AC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="32sp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="1"
-                android:text="AC"/>
+                android:background="@drawable/vien"
+                android:backgroundTint="#FF9800"
+                android:text="AC"
+                android:textSize="32sp" />
             <TextView
                 android:layout_marginRight="9dp"
                 android:layout_weight="1"/>
@@ -58,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="32sp"
                 android:layout_weight="1"
+                android:background="@drawable/vien"
                 android:text="÷"/>
         </TableRow>
         <TableRow
@@ -70,6 +75,7 @@
                 android:textSize="32sp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="1"
+                android:background="@drawable/vien"
                 android:text="7"/>
             <Button
                 android:id="@+id/num8"
@@ -78,6 +84,7 @@
                 android:textSize="32sp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="1"
+                android:background="@drawable/vien"
                 android:text="8"/>
             <Button
                 android:id="@+id/num9"
@@ -86,6 +93,8 @@
                 android:textSize="32sp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:background="@drawable/vien"
                 android:text="9"/>
             <Button
                 android:id="@+id/nhan"
@@ -93,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="32sp"
                 android:layout_weight="1"
+                android:background="@drawable/vien"
                 android:text="×"/>
         </TableRow>
         <TableRow
@@ -105,6 +115,7 @@
                 android:textSize="32sp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="1"
+                android:background="@drawable/vien"
                 android:text="4"/>
             <Button
                 android:id="@+id/num5"
@@ -113,6 +124,7 @@
                 android:textSize="32sp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="1"
+                android:background="@drawable/vien"
                 android:text="5"/>
             <Button
                 android:id="@+id/num6"
@@ -121,6 +133,7 @@
                 android:textSize="32sp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="1"
+                android:background="@drawable/vien"
                 android:text="6"/>
             <Button
                 android:id="@+id/tru"
@@ -128,6 +141,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="32sp"
                 android:layout_weight="1"
+                android:background="@drawable/vien"
                 android:text="−"/>
         </TableRow>
         <TableRow
@@ -140,6 +154,7 @@
                 android:textSize="32sp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="0.25"
+                android:background="@drawable/vien"
                 android:text="1"/>
             <Button
                 android:id="@+id/num2"
@@ -148,6 +163,7 @@
                 android:textSize="32sp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="0.25"
+                android:background="@drawable/vien"
                 android:text="2"/>
             <Button
                 android:id="@+id/num3"
@@ -156,6 +172,7 @@
                 android:textSize="32sp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="0.25"
+                android:background="@drawable/vien"
                 android:text="3"/>
             <Button
                 android:id="@+id/cong"
@@ -163,6 +180,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="32sp"
                 android:layout_weight="0.25"
+                android:background="@drawable/vien"
                 android:text="+"/>
         </TableRow>
         <TableRow
@@ -170,18 +188,20 @@
             android:weightSum="1">
             <Button
                 android:id="@+id/num0"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="32sp"
                 android:layout_marginRight="9dp"
-                android:layout_weight="0.25"
+                android:layout_weight="0.245"
+                android:background="@drawable/vien"
                 android:text="0"/>
             <Button
                 android:id="@+id/bang"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="32sp"
-                android:layout_weight="0.75"
+                android:layout_weight="0.755"
+                android:background="@drawable/vien"
                 android:text="="/>
         </TableRow>
     </TableLayout>
