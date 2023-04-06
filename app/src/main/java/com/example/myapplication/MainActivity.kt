@@ -294,5 +294,8 @@ class MainActivity : AppCompatActivity() {
 
         }
     }*/
+    //arraylist
+    //ListView
+    //RecycleView
     }
 
