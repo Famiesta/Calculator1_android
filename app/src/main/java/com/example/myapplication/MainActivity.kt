@@ -1,9 +1,12 @@
 package com.example.myapplication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 
 class MainActivity : AppCompatActivity() {
     private lateinit var tv2: TextView
@@ -15,6 +18,12 @@ class MainActivity : AppCompatActivity() {
     var ob2 = 1
     var method = ""
     var c = 0
+    val listResult:ArrayList<String> = arrayListOf()
+    val resultLauncherLambda=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        result->
+        val data: Intent?=result.data
+        Log.e("MainActivity","Second Activity callback: "+data?.getStringExtra("second_key_1"))
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,6 +32,10 @@ class MainActivity : AppCompatActivity() {
     }
         fun SetupUI() {
             textView1 = findViewById(R.id.input)
+            val numhis=findViewById<Button>(R.id.history)
+            numhis.setOnClickListener(){
+                goToSecondActivity()
+            }
             val num0 = findViewById<Button>(R.id.num0)
             num0.setOnClickListener() {
                 if (c == 1) {
@@ -231,14 +244,19 @@ class MainActivity : AppCompatActivity() {
             }
             val butResult = findViewById<Button>(R.id.bang)
             butResult.setOnClickListener() {
+                val oldValue=textView1.text.toString()
                 if (method.isEmpty()){
                     textView1.text = getResultInt().toString()
                     reStartExcept1()
                 } else {
                     if (method == "÷" && (ip1 % ip2 != 0)) {
                         textView1.text = getResultD().toString()
+                        val newValue=oldValue+getResultD().toString()
+                        listResult.add(newValue)
                     } else {
                         textView1.text = getResultInt().toString()
+                        val newValue=oldValue+getResultInt().toString()
+                        listResult.add(newValue)
                     }
                     reStart()
                 }
@@ -289,6 +307,12 @@ class MainActivity : AppCompatActivity() {
             tv2.text = "AC"
             return tv3
         }
+    fun goToSecondActivity(){
+        val intent=Intent(this,SecondActivity::class.java)
+        intent.putExtra("key_result",listResult.toTypedArray())
+        startActivity(intent)
+        resultLauncherLambda.launch(intent)
+    }
     /*fun continue(){
         if(c==1){
 
