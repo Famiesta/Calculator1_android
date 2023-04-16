@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     val resultLauncherLambda=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result->
         val data: Intent?=result.data
-        Log.e("MainActivity","Second Activity callback: "+data?.getStringExtra("second_key_1"))
+        Log.e("MainActivity","Second Activity callback: "+data?.getStringExtra("key_result"))
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -250,12 +251,14 @@ class MainActivity : AppCompatActivity() {
                     reStartExcept1()
                 } else {
                     if (method == "÷" && (ip1 % ip2 != 0)) {
-                        textView1.text = getResultD().toString()
-                        val newValue=oldValue+getResultD().toString()
+                        val tam=getResultD().toString()
+                        textView1.text = tam
+                        val newValue=oldValue+"="+tam
                         listResult.add(newValue)
                     } else {
-                        textView1.text = getResultInt().toString()
-                        val newValue=oldValue+getResultInt().toString()
+                        val tam=getResultInt().toString()
+                        textView1.text = tam
+                        val newValue=oldValue+ "=" +tam
                         listResult.add(newValue)
                     }
                     reStart()
@@ -311,7 +314,7 @@ class MainActivity : AppCompatActivity() {
         val intent=Intent(this,SecondActivity::class.java)
         intent.putExtra("key_result",listResult.toTypedArray())
         startActivity(intent)
-        resultLauncherLambda.launch(intent)
+        //resultLauncherLambda.launch(intent)
     }
     /*fun continue(){
         if(c==1){
