@@ -14,16 +14,14 @@
         <TableRow
             android:weightSum="1">
             <TextView
-                android:layout_weight="0.8"/>
+                android:layout_weight="0.98"/>
             <Button
                 android:id="@+id/history"
                 style="@style/Widget.MaterialComponents.Button.Icon"
                 android:background="@drawable/ic_history_foreground"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF9800"
-                android:layout_weight="0.2">
-
+                android:layout_weight="0.02">
             </Button>
         </TableRow>
 
@@ -34,12 +32,11 @@
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:gravity="center"
             android:textColor="#000"
             android:text="CALCULATOR"
-            android:autoSizeTextType="uniform"
-            android:layout_marginBottom="45dp"/>
+            android:autoSizeTextType="uniform"/>
         <TextView
             android:id="@+id/input"
             android:layout_width="match_parent"
@@ -57,7 +54,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp">
         <TableRow
-            android:paddingTop="75dp"
+            android:paddingTop="55dp"
             android:weightSum="4"
             android:textAlignment="center">
 
@@ -114,7 +111,6 @@
                 android:textSize="32sp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/white"
                 android:background="@drawable/vien"
                 android:text="9"/>
             <Button
