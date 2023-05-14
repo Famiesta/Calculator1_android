@@ -4,31 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:gravity="center"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
-    <TableLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TableRow
-            android:weightSum="1">
-            <TextView
-                android:layout_weight="0.98"/>
-            <Button
-                android:id="@+id/history"
-                style="@style/Widget.MaterialComponents.Button.Icon"
-                android:background="@drawable/ic_history_foreground"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.02">
-            </Button>
-        </TableRow>
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="5dp"
+        app:title="Calcultor"
+        android:layout_gravity="center"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    </TableLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -52,7 +44,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="10dp">
         <TableRow
             android:paddingTop="55dp"
             android:weightSum="4"

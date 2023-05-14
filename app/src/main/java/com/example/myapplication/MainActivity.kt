@@ -3,11 +3,17 @@ package com.example.myapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.Toolbar
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var tv2: TextView
@@ -19,26 +25,56 @@ class MainActivity : AppCompatActivity() {
     var ob2 = 1
     var method = ""
     var c = 0
-    val listResult: ArrayList<String> = arrayListOf()
+    var listResult: ArrayList<CalculatorResult> = arrayListOf()
     val resultLauncherLambda =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val data: Intent? = result.data
-            Log.e("MainActivity", "Second Activity callback: " + data?.getStringExtra("key_result"))
+            Log.e(
+                "MainActivity",
+                "Second Activity callback: " + data?.getSerializableExtra("key_result")
+            )
         }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("key_result",listResult)
+        super.onSaveInstanceState(outState)
+    }
+    override fun onRestoreInstanceState(savedInstanceState: Bundle){
+        super.onRestoreInstanceState(savedInstanceState)
+        listResult =  savedInstanceState.getSerializable("key_result") as? ArrayList<CalculatorResult> ?: arrayListOf()
+        textView1.text = listResult.last().result
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         tv2 = findViewById(R.id.AC)
+        val toolbar = findViewById<Toolbar>(R.id.my_toolbar)
+        setSupportActionBar(toolbar)
         SetupUI()
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_history -> {
+                goToRecycleActivity()
+            }
+
+            else -> {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun SetupUI() {
         textView1 = findViewById(R.id.input)
-        val numhis = findViewById<Button>(R.id.history)
-        numhis.setOnClickListener() {
-            goToRecycleActivity()
-        }
         val num0 = findViewById<Button>(R.id.num0)
         num0.setOnClickListener() {
             if (c == 1) {
@@ -247,6 +283,8 @@ class MainActivity : AppCompatActivity() {
         }
         val butResult = findViewById<Button>(R.id.bang)
         butResult.setOnClickListener() {
+            val calendar = Calendar.getInstance().time
+            val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US)
             val oldValue = textView1.text.toString()
             if (method.isEmpty()) {
                 textView1.text = getResultInt().toString()
@@ -256,12 +294,12 @@ class MainActivity : AppCompatActivity() {
                     val tam = getResultD().toString()
                     textView1.text = tam
                     val newValue = (oldValue + "=" + tam)
-                    listResult.add(newValue)
+                    listResult.add(CalculatorResult(newValue, formatter.format(calendar)))
                 } else {
                     val tam = getResultInt().toString()
                     textView1.text = tam
                     val newValue = oldValue + "=" + tam
-                    listResult.add(newValue)
+                    listResult.add(CalculatorResult(newValue, formatter.format(calendar)))
                 }
                 reStart()
             }
@@ -322,7 +360,7 @@ class MainActivity : AppCompatActivity() {
     }*/
     fun goToRecycleActivity() {
         val intent = Intent(this, HistoryRecycleView::class.java)
-        intent.putExtra("key_result", listResult.toTypedArray())
+        intent.putExtra("key_result", listResult)
         //startActivity(intent)
         resultLauncherLambda.launch(intent)
     }
@@ -332,8 +370,8 @@ class MainActivity : AppCompatActivity() {
         }
     }*/
 }
-    //arraylist
-    //ListView
-    //RecycleView
+//arraylist
+//ListView
+//RecycleView
 
 
