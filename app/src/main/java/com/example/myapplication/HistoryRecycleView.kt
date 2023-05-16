@@ -2,18 +2,23 @@ package com.example.myapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 
-@Suppress("DEPRECATION")
+//@Suppress("DEPRECATION")
 class HistoryRecycleView : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history_recycle_view)
         setupRV()
     }
-
     private fun setupRV() {
+        supportActionBar?.title="HISTORY"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val recycleData = intent.getSerializableExtra("key_result")as? List<CalculatorResult>?: listOf()
         val ltData = findViewById<RecyclerView>(R.id.rvHistory)
         val adapter = HistoryRecycleAdapter(recycleData, this)

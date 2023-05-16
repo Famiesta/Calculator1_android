@@ -38,7 +38,6 @@
             android:gravity="center|right"
             android:hint="I"
             android:autoSizeTextType="uniform"
-            android:textColor="#000"
             android:background="@drawable/vien" />
     </LinearLayout>
     <TableLayout

@@ -37,13 +37,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putSerializable("key_result",listResult)
+        outState.putInt("ip1",ip1)
+        outState.putInt("ip2",ip2)
+        outState.putString("method",method)
+        outState.putInt("ob1",ob1)
+        outState.putInt("ob2",ob2)
         super.onSaveInstanceState(outState)
     }
     override fun onRestoreInstanceState(savedInstanceState: Bundle){
         super.onRestoreInstanceState(savedInstanceState)
         listResult =  savedInstanceState.getSerializable("key_result") as? ArrayList<CalculatorResult> ?: arrayListOf()
-        textView1.text = listResult.last().result
-
+        //textView1.text = listResult.last().result
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +55,13 @@ class MainActivity : AppCompatActivity() {
         tv2 = findViewById(R.id.AC)
         val toolbar = findViewById<Toolbar>(R.id.my_toolbar)
         setSupportActionBar(toolbar)
+        if (savedInstanceState != null){
+            ip1 = savedInstanceState.getInt("ip1")
+            ip2 = savedInstanceState.getInt("ip2")
+            method = savedInstanceState.getString("method").toString()
+            ob1 = savedInstanceState.getInt("ob1")
+            ob2 = savedInstanceState.getInt("ob2")
+        }
         SetupUI()
     }
 
